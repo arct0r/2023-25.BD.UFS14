@@ -6,9 +6,11 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - run: python --version
+      - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - run: ls -la
       - run: python --version
       - run: uname -a
       - run: python -m pip install pytest

@@ -35,3 +35,7 @@ def test_fail():
     assert validate_wrapper(
         instance={"name" : "Eggs", "price" : '333'}, schema=schema,
     ) == False
+
+def test_function_output_with_snapshot(snapshot):
+    snapshot.snapshot_dir = 'snapshots'  # This line is optional.
+    snapshot.assert_match(str(func(5)), 'foo_output.txt')

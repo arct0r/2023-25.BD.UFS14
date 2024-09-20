@@ -38,4 +38,4 @@ def test_fail():
 
 def test_function_output_with_snapshot(snapshot):
     snapshot.snapshot_dir = 'snapshots'  # This line is optional.
-    snapshot.assert_match(str(func(5)), 'foo_output.txt')
+    snapshot.assert_match(str(func(4)), 'foo_output.txt')

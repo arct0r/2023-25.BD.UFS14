@@ -39,3 +39,13 @@ def test_fail():
 def test_function_output_with_snapshot(snapshot):
     snapshot.snapshot_dir = 'snapshots'  # This line is optional.
     snapshot.assert_match(str(func(4)), 'foo_output.txt')
+
+a = """frutti,prezzo,colore,sapore
+pera,100,rossa,buone
+mela,10,blu,squisita
+ananas,23,turchino,piccante
+"""
+
+def test_function_output_with_snapshot(snapshot):
+    snapshot.snapshot_dir = 'snapshots'  # This line is optional.
+    snapshot.assert_match(a, 'frutti.csv')

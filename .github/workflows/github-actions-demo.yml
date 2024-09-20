@@ -13,7 +13,7 @@ jobs:
       - run: ls -la
       - run: python --version
       - run: uname -a
-      - run: python -m pip install pytest
+      - run: python -m pip install pytest, jsonschema
       - run: python -m pytest
 
 

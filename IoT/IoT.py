@@ -5,6 +5,41 @@ import json
 from pathlib import Path
 import time 
 
+import paho.mqtt.client as mqtt
+
+# Roba per collegarsi al server MQTT
+def on_connect(client, userdata, flags, rc):
+    if rc == 0:
+        print("Connected successfully")
+        client.subscribe(topic)
+
+    else:
+        print(f"Connect failed with code {rc}")
+
+def on_publish(client, userdata, mid, properties=None):
+    print(f"Message {mid} has been published.")
+
+def on_message(client, userdata, message):
+    print(f"Received message on topic {message.topic}: {message.payload.decode()}")
+
+# Creo il client MQTT
+client = mqtt.Client(client_id="aaaaaaaa", clean_session=False)
+
+# Passo i metodi creati precendentemente al client
+client.on_connect = on_connect
+client.on_publish = on_publish
+client.on_message = on_message
+
+
+# Mi collego al broker
+broker_address = "mqtt-dashboard.com" 
+port = 1883 
+client.connect(broker_address, port)
+
+# Nome del topic
+topic = "testtopic/1"
+
+
 def math(value):
     # Metodo che fa tutta la matematica
     A = 7.0405E-12  # mm/digit^3
@@ -38,6 +73,10 @@ def api_reqs(jsons, log = None):
             response = re.post('https://zion.nextind.eu:443/api/v1/test_device_2024/telemetry', json.dumps(json_), headers=headers)
             # Converto il dizionario in json e lo posto
             print(json_)
+            
+            # Con questo pubblico sul server MQTT
+            client.publish(topic, json.dumps(json_)+' Sent by Davidino')
+
             print(response.status_code)
             if log != None:
                 writeToLog(log, content=json_, response=response.status_code)
@@ -76,3 +115,5 @@ def main_csv():
     # Chiudo il file di log
 
 main_csv()
+# Per far rimanere il client in ascolto per nuovi messaggi
+client.loop_forever()

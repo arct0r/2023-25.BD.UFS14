@@ -32,24 +32,24 @@ def MyHttpTrigger(req: func.HttpRequest) -> func.HttpResponse:
              status_code=200
         )
 
-'''
+
 @app.route(route="PubChem", auth_level=func.AuthLevel.ANONYMOUS)
-def MyHttpTrigger(req: func.HttpRequest) -> func.HttpResponse:
+def PubChem(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
 
     substance = req.params.get('substance')
 
     if substance:
-        return func.HttpResponse(f"Results for {substance}: ")
+        #return func.HttpResponse(f"Results for {substance}: ")
 
         conn = duckdb.connect(':memory:')
         conn.execute("CREATE TABLE local_substances AS SELECT * FROM read_csv('HSDB.csv', header=1)")         
-        query = "SELECT Measure, Toxicity, Reference FROM local_substances WHERE Name = ?"
+        query = "SELECT Measure, Toxicity FROM local_substances WHERE Name = ?"
         query_res = conn.execute(query, [substance]).df()
-        return func.HttpResponse(f"Results: {query_res}")
+        return func.HttpResponse(f"Searching for {substance} \nResults: {query_res.to_string()}")
 
     else:
         return func.HttpResponse(
              "pubchem.",
              status_code=200
-        )'''
+        )

@@ -12,14 +12,6 @@ def MyHttpTrigger(req: func.HttpRequest) -> func.HttpResponse:
 
     name = req.params.get('name')
     cognome = req.params.get('cognome')
-    substance = req.params.get('substance')
-
-    if substance:
-        conn = duckdb.connect(':memory:')
-        conn.execute("CREATE TABLE local_substances AS SELECT * FROM read_csv('HSDB.csv', header=1)")         
-        query = "SELECT Measure, Toxicity, Reference FROM local_substances WHERE Name = ?"
-        query_res = conn.execute(query, [substance])
-        return func.HttpResponse(f"Results: {query_res}")
     
     if not name:
         try:
@@ -40,7 +32,6 @@ def MyHttpTrigger(req: func.HttpRequest) -> func.HttpResponse:
              status_code=200
         )
 
-'''
 @app.route(route="PubChem", auth_level=func.AuthLevel.ANONYMOUS)
 def MyHttpTrigger(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
@@ -48,6 +39,8 @@ def MyHttpTrigger(req: func.HttpRequest) -> func.HttpResponse:
     substance = req.params.get('substance')
 
     if substance:
+        return func.HttpResponse(f"Results for {substance}: ")
+
         conn = duckdb.connect(':memory:')
         conn.execute("CREATE TABLE local_substances AS SELECT * FROM read_csv('HSDB.csv', header=1)")         
         query = "SELECT Measure, Toxicity, Reference FROM local_substances WHERE Name = ?"

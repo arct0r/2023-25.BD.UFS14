@@ -53,3 +53,14 @@ def PubChem(req: func.HttpRequest) -> func.HttpResponse:
              "pubchem.",
              status_code=200
         )
+
+@app.route(route="SubstanceList", auth_level=func.AuthLevel.ANONYMOUS)
+def SubstanceList(req: func.HttpRequest) -> func.HttpResponse:
+
+        #return func.HttpResponse(f"Results for {substance}: ")
+
+        conn = duckdb.connect(':memory:')
+        conn.execute("CREATE TABLE local_substances AS SELECT * FROM read_csv('HSDB.csv', header=1)")         
+        query = "SELECT Name FROM local_substances"
+        query_res = conn.execute(query).df()
+        return func.HttpResponse(f"{query_res.to_string()}")

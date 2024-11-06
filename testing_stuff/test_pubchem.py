@@ -1,4 +1,6 @@
 import duckdb
+import jsonschema
+import json
 
 # Metodo che prova a collegarsi ad un file csv non vuoto e controlla che la struttura sia corretta
 def test_PubChem_Index_table():
@@ -35,5 +37,23 @@ def test_substance_snapshot(snapshot):
 
     conn.close()
 
+def test_ingredient_json():
+    # Testo il JSON Schema
+    schema_file = 'schema.json'
+    data_file = 'pubchem.json'
+    with open(schema_file, 'r') as f:
+        schema = json.load(f)
+
+    with open(data_file, 'r') as f:
+        data = json.load(f)
+
+    assert bool_validate(instance=data,schema=schema) == True
+
+def bool_validate(instance,schema):
+    try:
+        jsonschema.validate(instance=instance,schema=schema)
+        return True
+    except:
+        return False
 #substance_snapshot()
 

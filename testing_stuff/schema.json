@@ -1,0 +1,167 @@
+{
+  "$schema": "http://json-schema.org/schema#",
+  "type": "object",
+  "properties": {
+    "Annotations": {
+      "type": "object",
+      "properties": {
+        "Annotation": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "SourceName": {
+                "type": "string"
+              },
+              "SourceID": {
+                "type": "string"
+              },
+              "Name": {
+                "type": "string"
+              },
+              "Description": {
+                "type": "string"
+              },
+              "URL": {
+                "type": "string"
+              },
+              "LicenseURL": {
+                "type": "string"
+              },
+              "Data": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "TOCHeading": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string"
+                        },
+                        "#TOCHeading": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "#TOCHeading",
+                        "type"
+                      ]
+                    },
+                    "Description": {
+                      "type": "string"
+                    },
+                    "Reference": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "Value": {
+                      "type": "object",
+                      "properties": {
+                        "StringWithMarkup": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "String": {
+                                "type": "string"
+                              },
+                              "Markup": {
+                                "type": "array",
+                                "items": {
+                                  "type": "object",
+                                  "properties": {
+                                    "Start": {
+                                      "type": "integer"
+                                    },
+                                    "Length": {
+                                      "type": "integer"
+                                    },
+                                    "URL": {
+                                      "type": "string"
+                                    },
+                                    "Type": {
+                                      "type": "string"
+                                    },
+                                    "Extra": {
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "Extra",
+                                    "Length",
+                                    "Start",
+                                    "Type",
+                                    "URL"
+                                  ]
+                                }
+                              }
+                            },
+                            "required": [
+                              "String"
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "StringWithMarkup"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "Description",
+                    "TOCHeading",
+                    "Value"
+                  ]
+                }
+              },
+              "ANID": {
+                "type": "integer"
+              },
+              "LinkedRecords": {
+                "type": "object",
+                "properties": {
+                  "CID": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "required": [
+                  "CID"
+                ]
+              }
+            },
+            "required": [
+              "ANID",
+              "Data",
+              "Description",
+              "LicenseURL",
+              "Name",
+              "SourceID",
+              "SourceName",
+              "URL"
+            ]
+          }
+        },
+        "Page": {
+          "type": "integer"
+        },
+        "TotalPages": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "Annotation",
+        "Page",
+        "TotalPages"
+      ]
+    }
+  },
+  "required": [
+    "Annotations"
+  ]
+}

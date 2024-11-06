@@ -14,8 +14,9 @@ jobs:
       - run: python --version
       - run: uname -a
       - run: python -m pip install -r testing_stuff/testing_requirements.txt
-      - run: cd testing_stuff
       - run: python -m pip install -U pytest 
       - run: python -m pytest
+        working-directory: ./testing_stuff
+
 
 
